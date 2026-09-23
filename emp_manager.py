@@ -1,6 +1,9 @@
-# Python OOP practice file
+# Employee management system
+# Allows for basic employee management functions including:
+# hiring/firing, salary management, org hierarchy
 
 # File reader
+# In place of future SQL database
 def load_from_file(filename):
     with open(filename) as f:
         lines = [line.strip() for line in f if line.strip()]
@@ -19,6 +22,7 @@ def load_from_file(filename):
     for line in manager_lines:
         Manager.from_string(line)
 
+# Employee parent class
 class Employee:
 
     # class variables
@@ -40,7 +44,7 @@ class Employee:
         Employee.emp_registry[self.id] = self
         Employee.num_of_emps += 1
 
-    # dunder methods, which are overring methods in the Object class (standard library)
+    # dunder methods, which are overriding methods in the Object class (standard library)
     def __repr__(self):
         return f'Employee({self.first!r}, {self.last!r}, {self.email!r}, {self.salary})'
 
@@ -82,7 +86,8 @@ class Employee:
             return f'Employee with ID {emp_id} not found.'
         return emp
 
-
+    # Fires any employee, flags firing a manager if they have reports
+    # Error handling functionality coming soon
     @classmethod
     def fire(cls, emp_id):
         emp = cls.find_emp(emp_id)
@@ -136,6 +141,7 @@ class Manager(Employee):
             self.employees.remove(emp)
             emp.manager = None
 
+    # Prints org charts with indentation under managers
     def print_org_chart(self, depth=0):
         print('  ' * depth + self.fullname + "'s team")
         for emp in self.employees:
@@ -167,4 +173,10 @@ if __name__ == '__main__':
 
     Employee.print_all()
     print()
-    Manager.find_mgr('05').print_org_chart()
+    Manager.find_mgr('24').print_org_chart()
+    print()
+    Manager.find_mgr('25').print_org_chart()
+    print()
+    Manager.find_mgr('26').print_org_chart()
+    print()
+    Manager.find_mgr('27').print_org_chart()
