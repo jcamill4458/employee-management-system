@@ -1,0 +1,20 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python bytecode/cache
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+
+# OS clutter
+.DS_Store
+Thumbs.db
+
+# Testing
+.pytest_cache/
+
+# Logs
+*.log

@@ -1,0 +1,6 @@
+emp,Test,User,75000
+emp,John,Doe,67000
+emp,Ada,Lovelace,100000
+dev,Paul,Blart,50000,Python
+mgr,Mark,Zuckerberg,115000,00|03
+mgr,Jeff,Bezos,145000,04
