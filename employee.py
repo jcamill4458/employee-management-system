@@ -52,15 +52,12 @@ class Employee:
 
     @classmethod
     def print_all(cls):
-        for key, value in cls.emp_registry.items():
-            print(f'{key}: {value}')
+        # useful syntax using for loops
+        return '\n'.join(f'{key}: {val}' for key, val in cls.emp_registry.items())
 
     @classmethod
     def find_emp(cls, emp_id):
-        emp = Employee.emp_registry.get(emp_id)
-        if emp is None:
-            return f'Employee with ID {emp_id} not found.'
-        return emp
+        return cls.emp_registry.get(emp_id)
 
     # Fires any employee, flags firing a manager if they have reports
     # Error handling functionality coming soon
@@ -108,6 +105,13 @@ class Manager(Employee):
                 self.add_emp(emp)
 
     def add_emp(self, emp):
+        boss = self
+        while boss is not None:
+            if boss is emp:
+                raise ValueError(f'{emp.fullname} cannot report to themselves or their own report')
+            boss = boss.manager
+        if emp.manager is not None and emp.manager is not self:
+            emp.manager.remove_emp(emp)
         if emp not in self.employees:
             self.employees.append(emp)
             emp.manager = self
@@ -117,13 +121,15 @@ class Manager(Employee):
             self.employees.remove(emp)
             emp.manager = None
 
-    # Prints org charts with indentation under managers
-    def print_org_chart(self, depth=0):
-        print('  ' * depth + self.fullname + "'s team")
+    # Prints org charts with indentation under managers **APPENDING is useful here and in other functions**
+    def org_chart(self, depth=0):
+        indent = '  ' * depth
+        lines = [f"{indent}{self.fullname}'s team"]
         for emp in self.employees:
-            print('  ' * depth + '-->', emp.fullname)
+            lines.append(f"{indent}--> {emp.fullname} [{emp.id}]")
             if isinstance(emp, Manager):
-                emp.print_org_chart(depth + 1)
+                lines.append(emp.org_chart(depth + 1))
+        return '\n'.join(lines)
 
     @classmethod
     def find_mgr(cls, emp_id):

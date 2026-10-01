@@ -27,23 +27,33 @@ def load_from_file(filename):
     print("File ", filename, " loaded.\n")
 
 # input checker
-def input_check(u):
-    if ' ' in u:
-        u, arg = u.split(' ')
+def input_check(user_input):
+    cmd, _, arg = user_input.strip().partition(' ')
+    cmd, arg = cmd.lower(), arg.strip()
 
-    match u:
+    if cmd in ('print', 'print_data', 'print_org'):
+        if not arg:
+            return f'Usage: {cmd} {{id}}'
+        emp = Employee.find_emp(arg)
+        if emp is None:
+            return f"No employee with id '{arg}'"
+        if cmd == 'print':
+            return str(emp)
+        if cmd == 'print_data':
+            return repr(emp)
+        if not isinstance(emp, Manager):
+            return f'{emp.fullname} is not a manager'
+        return emp.org_chart()
+
+    match cmd:
         case 'help':
             return help_menu()
         case 'print_all':
             return Employee.print_all()
-        case 'print_org':
-            return Manager.find_mgr(arg).print_org_chart()
-        case 'print':
-            return Employee.find_emp(arg)
-        case 'print_data':
-            return repr(Employee.find_emp(arg))
         case 'exit':
             return 'Exiting...'
+        case '':
+            return ''
         case _:
             return 'Unknown command'
 
