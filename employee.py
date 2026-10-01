@@ -1,6 +1,5 @@
 # Employee parent class
 class Employee:
-
     # class variables
     num_of_emps = 0
     raise_amt = 1.04
@@ -89,6 +88,9 @@ class Developer(Employee):
         super().__init__(first, last, salary)
         self.prog_lang = prog_lang
 
+    def __repr__(self):
+        return f'Developer({self.first!r}, {self.last!r}, {self.email!r}, {self.prog_lang!r}, {self.salary})'
+
     @classmethod
     def from_string(cls, emp_str):
         first, last, salary, prog_lang = emp_str.split(',')
@@ -103,6 +105,9 @@ class Manager(Employee):
         if employees is not None:
             for emp in employees:
                 self.add_emp(emp)
+
+    def __repr__(self):
+        return f'Manager({self.first!r}, {self.last!r}, {self.email!r}, {self.salary}, {self.employees})'
 
     def add_emp(self, emp):
         boss = self
