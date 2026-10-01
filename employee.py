@@ -76,6 +76,7 @@ class Employee:
         if emp.manager:
             emp.manager.remove_emp(emp)
         del cls.emp_registry[emp_id]
+        Employee.num_of_emps -= 1
         return f'{emp.fullname} has been fired.'
 
     @classmethod
