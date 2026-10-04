@@ -137,13 +137,6 @@ class Manager(Employee):
         return '\n'.join(lines)
 
     @classmethod
-    def find_mgr(cls, emp_id):
-        emp = cls.find_emp(emp_id)
-        if not isinstance(emp, Manager):
-            return None
-        return emp
-
-    @classmethod
     def from_string(cls, emp_str):
         first, last, salary, emp_ids = emp_str.split(',', 3)
         mgr = cls(first, last, int(salary))

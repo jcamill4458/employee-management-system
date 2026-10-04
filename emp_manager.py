@@ -64,7 +64,8 @@ def help_menu():
             "print_org {mgr_id}: Print a manager's org hierarchy\n"
             "print {emp_id}: Print a singular employee's basic information\n"
             "print_data {emp_id}: Print a singular employee's data\n"
-            "")
+            "hire {emp_type, fname, lname, salary, {prog lang, emp list}}: Hire a new employee\n"
+            "fire {emp_id}: Fire an employee\n")
 
 # tests
 if __name__ == '__main__':
@@ -72,11 +73,9 @@ if __name__ == '__main__':
     load_from_file('example-employees.txt')
     print("Type 'exit' to exit.\n")
 
+    Manager.find_emp('26').add_emp(Manager.find_emp('27'))
+
     u = ""
     while u != 'exit':
         u = input("Enter employee function ('help' for function list): ")
         print(input_check(u), "\n")
-
-# TO DO:
-# Find way to error handle (ex. print_org used on employee)
-# Make sure input_check is doing things properly
