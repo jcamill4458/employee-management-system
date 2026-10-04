@@ -1,5 +1,5 @@
 # Employee management system
-# Allows for basic employee management functions including:
+# Allows for basic employee management functions, including:
 # hiring/firing, salary management, org hierarchy
 
 from employee import Employee, Manager, Developer
@@ -76,6 +76,6 @@ if __name__ == '__main__':
     Manager.find_emp('26').add_emp(Manager.find_emp('27'))
 
     u = ""
-    while u != 'exit':
+    while u.strip().lower() != 'exit':
         u = input("Enter employee function ('help' for function list): ")
         print(input_check(u), "\n")
